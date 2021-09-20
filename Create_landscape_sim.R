@@ -1,6 +1,6 @@
 
 # This series of scripts reproduces the results and sensitivity analyses of the paper: 
-# Neyret et al. (submitted). Landscape management for grassland multifunctionality). Ecosystem Services.
+# Neyret et al. (2021). Assessing the effects of landscape management on grassland multifunctionality in Germany. Ecosystem Services.
 
 ## This script creates landscapes, quantify ecosystem multifunctionality, 
 # average and variation in LUI and quantify relationships

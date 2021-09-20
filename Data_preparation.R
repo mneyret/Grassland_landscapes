@@ -8,9 +8,10 @@ setwd('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape
 print("Preparing data")
 
 
+
 if (rerun_prep == FALSE){
   ES_grasslands = fread(file = 'ES_grasslands.csv')
- services_all = colnames(ES_grasslands)[colnames(ES_grasslands) != 'Plot']
+  services_all = colnames(ES_grasslands)[colnames(ES_grasslands) != 'Plot']
 ES_grasslands[, Exploratory := substr(Plot, 1, 1)]
 
 env_data = fread( 'env_data.csv')
@@ -32,7 +33,6 @@ All_abundances_families <- data.table(dcast(All_abundances_aggr[!is.na(Family),]
 
 All_abundances_cast = merge(All_abundances_species, All_abundances_families, by = 'Plot')
 All_abundances_cast[, Exploratory := substr(Plot, 1, 1)]
-
 
 most_charismatic_birds = c("Sturnus_vulgaris"    ,    "Ciconia_ciconia"       , "Cuculus_canorus"       ,  "Turdus_merula"           ,"Luscinia_megarhynchos"  ,
 "Erithacus_rubecula"  ,    "Buteo_buteo"           , "Corvus_corax"          ,  "Garrulus_glandarius"     ,"Milvus_milvus"          ,
@@ -244,7 +244,7 @@ ES_grasslands <- merge(ES_grasslands[, c("Plot",  "Total_flower_cover", "Biomass
 # Impute missing values
 ES_grasslands$Uniqueness_juniperus <- as.numeric(ES_grasslands$Uniqueness_juniperus)
 
-
+drop
 ### Data manipulation 
 ### Fill in empty service values using MICE
 services = c( 'Total_flower_cover', 'Biomass_production','Charismatic_birds_richness', 'Nshoot_2009_2001','butterfly_abundance', 'Soil.C.stock_2011',  'Cover_edible', 'Redlist_richness', 'Redlist_cover', 'Charismatic_plants', 'Plant_richness', 'Bird_richness', 'Bird_family_richness', 'Uniqueness_juniperus')
