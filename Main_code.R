@@ -34,11 +34,12 @@ library(rstatix)
 library(gridExtra)
 set.seed(101)
 
+# Rerun data preparation from raw datasets (TRUE/FALSE)
 rerun_prep = F
+
+# Save all plots? TRUE/FALSE
 saveplots = T
-col2 <- colorRampPalette(c("#67001F", "#B2182B", "#D6604D", "#F4A582",
-                           "#FDDBC7", "#FFFFFF", "#D1E5F0", "#92C5DE",
-                           "#4393C3", "#2166AC", "#053061"))
+
 col2 <- colorRampPalette(c('#a50026',
   '#d73027',
   '#f46d43',
@@ -58,8 +59,6 @@ source(file = 'Functions.R')
 
 # This creates the table in which model results (equivalent to figure 6 and Table C2)
 write.table('', file = "Sensitivity_analyses/Result_data.csv")
-
-
 
 ## This loop builds the results for all parameters. 
 # Default parameters (as presented in the main text) are shown first in the vectors
@@ -96,10 +95,12 @@ for (lui_class_method in c('quantile_30' , 'quantile_20')){ # lui_class_method: 
           for (threshold_to_use in options_threshold) { # threshold_to_use: Threshold used in the threshold and compromise methods
 
             
-# Source each step of the analysis                    
-source(file = 'Data_preparation.R')
-source(file = 'Plot_scale.R')
-source(file = 'Create_landscape_sim.R')
+#    Sources each step of the analysis. The 3 first steps cannot be reproduced without access to raw data.
+#    The simulated datasets are provided and can be used for the last steps.
+            
+#source(file = 'Data_preparation.R')
+#source(file = 'Plot_scale.R')
+#source(file = 'Create_landscape_sim.R')
 source(file = 'Calculate_MF.R')
 source(file = 'All_plots.R')
 

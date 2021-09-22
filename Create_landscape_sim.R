@@ -1,9 +1,12 @@
 
 # This series of scripts reproduces the results and sensitivity analyses of the paper: 
-# Neyret et al. (2021). Assessing the effects of landscape management on grassland multifunctionality in Germany. Ecosystem Services.
+# Neyret et al. (2021). Assessing the impact of grassland management on landscape multifunctionality. Ecosystem Services.
 
-## This script creates landscapes, quantify ecosystem multifunctionality, 
-# average and variation in LUI and quantify relationships
+## This script creates artificial landscapes and calculates 
+# landscape-level ES and environmental factors values.
+
+# This script takes as input the es_data dataset from the Plot_scale.R script.
+# This script is provided for INFORMATION PURPOSE ONLY: it won't run as it is!
 
 print("Starting simulations")
 
@@ -114,4 +117,31 @@ for (j in 1:length(unique(es_data$Exploratory))) {
   }
 
 }
+
+raw_sim_data2 = data.table(rbind(cbind(raw_sim_data[1, ,], env_sim_data[1, ,]),
+                                 cbind(raw_sim_data[ 2, ,], env_sim_data[2, ,]),
+                                 cbind(raw_sim_data[3, ,], env_sim_data[3, ,])))
+
+colnames(raw_sim_data2) = c('Ric_tot', 'Birds_families', 'Birds_charism', 
+                            'Protein', 'C_stock', 'flowers',  'butterflies', 
+                            'juniperus', 'plants_charism', 'edible',
+                            'low', 'med', 'high', 'lui_mean', 'lui_sd',
+                            "Tmean.Annual", "Precip.Annual", "Soil.depth", "pH", "Clay", 'Sand',
+                            "Grassland.1000.CW", "TWI", 'Axis1', 'Axis2', 'Axis3', 'Heterogeneity'#, 'fert_mean', 'fert_sd', 'mow_mean', 'mow_sd', 'graz_mean', 'graz_sd'
+)
+
+raw_sim_data2$Explo = rep(c('A', 'H', 'S'), each = (n_combi*n_ls))
+raw_sim_data2$ls = rep(1:(n_combi*n_ls), 3)
+
+raw_sim_data2 = raw_sim_data2[!is.na(Ric_tot),]
+if (environmental_correction == TRUE){
+  raw_sim_data2[, Ric_tot := residuals(lm(Ric_tot ~ Explo + Precip.Annual +Tmean.Annual + Soil.depth + pH + Clay + Sand + Grassland.1000.CW+TWI+Heterogeneity), trace = F)]
+  raw_sim_data2[, Birds_families := residuals(lm(Birds_families ~  Explo + Precip.Annual + Tmean.Annual + Soil.depth+pH+Clay +Sand+Grassland.1000.CW+TWI+ Heterogeneity), trace = F)]
+  raw_sim_data2[, Birds_charism := residuals(lm(Birds_charism ~ Explo +Precip.Annual + Tmean.Annual + Soil.depth+pH+Clay +Sand+Grassland.1000.CW+TWI+ Heterogeneity), trace = F)]
+}
+
+data_test_merge = melt.data.table(raw_sim_data2, id.var = c('Explo', 'ls', 'low', 'med', 'high', 'lui_mean', 'lui_sd'))
+data_test_merge_tosave = melt.data.table(raw_sim_data2, id.var = c('Explo', 'ls', 'low', 'med', 'high','lui_mean', 'lui_sd'))
+
+fwrite(data_test_merge_tosave, file = paste('Data/Data_', environmental_correction,'_',lui_class_method,'_', no_plots,'_',method_within_landscape, '.csv', sep = ''))
 

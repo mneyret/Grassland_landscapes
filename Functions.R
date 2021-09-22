@@ -1,31 +1,5 @@
-rperm <- function(n_landscapes, n_plots, list_of_numbers) {
-  # Obtain m unique permutations of 1:size
-  
-  # Function to obtain a new permutation.
-  newperm <- function() {
-    count <- 0                # Protects against infinite loops
-    repeat {
-      # Generate a permutation and check against previous ones.
-      p <- sample(list_of_numbers, n_plots)
-      p <- sort(p)
-      hash.p <- paste(p, collapse="")
-      if (is.null(cache[[hash.p]])) break
-      
-      # Prepare to try again.
-      count <- count+1
-      if (count > 1000) {   # 1000 is arbitrary; adjust to taste
-        p <- NA           # NA indicates a new permutation wasn't found
-        hash.p <- ""
-        break
-      }
-    }
-    cache[[hash.p]] <<- TRUE  # Update the list of permutations found                     # Return this (new) permutation
-  }
-  
-  # Obtain m unique permutations.
-  cache <- list()
-  return(t(replicate(n_landscapes, newperm())  ))
-} 
+# This series of scripts reproduces the results and sensitivity analyses of the paper: 
+# Neyret et al. (2021). Landscape management for grassland multifunctionality. Ecosystem Services.
 
 new_newperm = function(n_low, n_med, n_high, lui_no_na, n_ls){
   cache = list()

@@ -1,17 +1,14 @@
+# This series of scripts reproduces the results and sensitivity analyses of the paper: 
+# Neyret et al. (2021). Assessing the impact of grassland management on landscape multifunctionality. Ecosystem Services.
+
+# This script makes plot-level analyses and environmental corrections.
+# It takes as input the ES_grasslands and env_data dataset created in the Data_preparation.R file.
+# As some of the data to run Data_preparation.R is not available, this script won't run as it is!
+# It is provided for INFORMATION PURPOSE ONLY.
+
+
 # Extract correlation matrix
 print("plot")
-
-#corrtest_mat <- corr.test(ES_grasslands_corr[, c(2,4:15)])
-#a <- matrix(paste(
-#  round(corrtest_mat$r, 2),
-#  ifelse(corrtest_mat$p > 0.05, "",
-#    ifelse(corrtest_mat$p > 0.01, "*",
-#      ifelse(corrtest_mat$p > 0.001, "**", "***")
-#    )
-#  )
-#), nrow = 13)
-#colnames(a) <- rownames(a) <- colnames(corrtest_mat$r)
-
 
 ES_grasslands_corr <- cbind(
   ES_grasslands[, .SD, .SDcols = c("Plot", 'Uniqueness_juniperus', 'Exploratory')],
@@ -37,8 +34,7 @@ if (environmental_correction == TRUE) {
 }
 
 
-
-# SPlot-level analysis
+# Plot-level analysis
 if (environmental_correction == TRUE) {
   data_plot = copy(ES_grasslands_corr)
   ES_grasslands_corr = merge(ES_grasslands_corr, env_data[, c('Plot', 'LUI')], by = 'Plot')
@@ -120,13 +116,6 @@ data_plot_melt$pretty_variables <- factor(data_plot_melt$pretty_variables,
 )
 
 
-#data_plot_letters <- data_plot_melt[!is.na(pretty_variables), model_letters(value, luiclass, Region), by = list(pretty_variables)]
-#to_print <- data_plot_melt[, list(mean = mean(value), sd = sd(value)), by = list(pretty_variables, Region, luiclass)]
-
-#to_print <- merge(data_plot_letters, to_print)
-#to_print[, to_print := paste(round(mean, 1), " +/- ", round(sd, 1), " (", gsub(" ", "", Letter), ")", sep = "")]
-
-#View(dcast(to_print, pretty_variables + luiclass ~ Region, value = to_print))
 library(ggpubr)
 data_plot_melt = data_plot_melt[!is.na(pretty_variables) & !is.na(luiclass),]
 
@@ -181,5 +170,5 @@ bxp_full <- ggboxplot(
 bxp_full
 
 if (saveplots) {
-  ggsave(plot = bxp_main, paste(c("/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity analyses/boxplot", environmental_correction, "_lui", lui_class_method, ".pdf"), collapse = ""), width = 10)
+  ggsave(plot = bxp_main, paste(c("Results/Sensitivity analyses/boxplot", environmental_correction, "_lui", lui_class_method, ".pdf"), collapse = ""), width = 10)
 }

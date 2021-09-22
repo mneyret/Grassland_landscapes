@@ -1,7 +1,8 @@
-# This series of scripts reproduces the results and sensitivity analyses of the paper: 
-# Neyret et al. (2021). Assessing the effects of landscape management on grassland multifunctionality in Germany. Ecosystem Services.
+# # This series of scripts reproduces the results and sensitivity analyses of the paper: 
+# Neyret et al. (2021). Assessing the impact of grassland management on landscape multifunctionality. Ecosystem Services.
 
-# This final script outputs all figures presented in the paper and SI
+# This final script takes as input the outputs of Calculate_MF.R and 
+# creates all figures presented in the paper and SI
 
 ### Correlations ####
 print('all plots')
@@ -34,7 +35,7 @@ all_corr_plot = ggplot(all_corr, aes(x = Var1, y = Var2, fill = correlation, siz
   theme(legend.position = 'bottom', legend.direction = 'horizontal', axis.text.x = element_text(angle = 45, hjust = 1))
 
 if(saveplots){
-  ggsave(plot = all_corr_plot, paste(c('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity_analyses/corrplot_envcorr', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '.pdf'), collapse = ""), width = 7, height = 3.5)
+  ggsave(plot = all_corr_plot, paste(c('Sensitivity_analyses/corrplot_envcorr', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '.pdf'), collapse = ""), width = 7, height = 3.5)
 }
 
 }
@@ -178,14 +179,14 @@ print("a")
  
  grobs_fig4 = lapply(plots_fig4, ggplotGrob)
  gg_fig4 = grid.arrange(grobs = grobs_fig4, ncol = 1,  align = "v", axis = "l")
- ggsave(plot = gg_fig4, filename =  paste(c('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity_analyses/Fig4_', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), 
+ ggsave(plot = gg_fig4, filename =  paste(c('Sensitivity_analyses/Fig4_', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), 
                                           collapse = ""), width = 10, height = 5)
  
  
  plots_fig5_data = interpolate_tern(data_average_melt[Region == 'Central' & data_average_melt$pretty_variables %in% c('Ric + Prod','Ric + Aest', 'Ric + Aest + Reg ID','Ric + Aest + C stock', 'Ric + Prod + Aest + C stock', 'Ric + Prod + Aest + C stock + Forag + Reg ID'),])
  plots_fig5_data$grid[, 'pretty_variables'] = factor( plots_fig5_data$grid[, 'pretty_variables'] , levels = c('Ric + Prod','Ric + Aest', 'Ric + Aest + Reg ID','Ric + Aest + C stock', 'Ric + Prod + Aest + C stock', 'Ric + Prod + Aest + C stock + Forag + Reg ID'))
  plots_fig5  = outplot_tern(plots_fig5_data$grid, plots_fig5_data$R2)
- ggsave(plot = plots_fig5, filename =  paste(c('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity_analyses/Fig5_', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), collapse = ""), width = 11, height = 3)
+ ggsave(plot = plots_fig5, filename =  paste(c('Sensitivity_analyses/Fig5_', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), collapse = ""), width = 11, height = 3)
  
  ### Stakeholders
  
@@ -195,7 +196,7 @@ print("a")
    scale_fill_gradientn(colors = col2(20), name = "Multifunctionality", limits=c(0.2,0.8)) +
    scale_color_gradientn(colors = col2(20), name = "Multifunctionality", limits=c(0.2,0.8))
    
- ggsave(plot = plots_figstakeholders, filename =  paste(c('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity_analyses/Figstakeholders_', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), collapse = ""), width = 11, height = 5)
+ ggsave(plot = plots_figstakeholders, filename =  paste(c('Sensitivity_analyses/Figstakeholders_', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), collapse = ""), width = 11, height = 5)
  
 
  
@@ -213,7 +214,7 @@ print("a")
  
  grobs_SI = lapply(plots_SI, ggplotGrob)
  gg_SI = grid.arrange(grobs = grobs_SI, ncol = 1,  align = "v", axis = "l")
- ggsave(plot = gg_SI, filename =  paste(c('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity_analyses/TERN_SI_', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), collapse = ""), width = 10, height = 15)
+ ggsave(plot = gg_SI, filename =  paste(c('Sensitivity_analyses/TERN_SI_', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), collapse = ""), width = 10, height = 15)
 
  
  if (method == 'Threshold' & no_plots == 10 & lui_class_method == 'luiquantile_30' ){
@@ -229,7 +230,7 @@ print("a")
    })
  grobs = lapply(plots_SI_lui, ggplotGrob)
  gg = grid.arrange(grobs = grobs, ncol = 1,  align = "v", axis = "l")
- ggsave(plot = gg, filename =  paste(c('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity_analyses/MEAN_SD', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), collapse = ""), width = 10, height = 12)
+ ggsave(plot = gg, filename =  paste(c('Sensitivity_analyses/MEAN_SD', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '2.pdf'), collapse = ""), width = 10, height = 12)
 }
 
 
@@ -313,7 +314,7 @@ gg_ranges_corr_ratio = ggplot(Ranges[nservices==1 ,], aes(x = coeff_ratio, y = r
   theme(legend.position = 'none')
 
 if(saveplots){
-  ggsave(plot = gg_ranges_corr_ratio, paste(c('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity_analyses/ggrangescorrratio', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '.pdf'), collapse = ""), width = 5, height = 3.5)
+  ggsave(plot = gg_ranges_corr_ratio, paste(c('Sensitivity_analyses/ggrangescorrratio', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '.pdf'), collapse = ""), width = 5, height = 3.5)
 }
 
 # Model: multifunctionality range variation with the service response variance
@@ -338,7 +339,7 @@ gg_ranges_srv = ggplot( Ranges[nservices>0,], aes(x = SRV, y = range, color = Re
   theme(legend.position = 'none') 
 
 if(saveplots){
-  ggsave(plot = gg_ranges_srv, paste(c('/Users/Margot/Desktop/Research/Senckenberg/Project_Landscape_MF/Landscape_composition/Results/Sensitivity_analyses/ggrangessrv', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '.pdf'), collapse = ""), width = 5, height = 3.5)
+  ggsave(plot = gg_ranges_srv, paste(c('Results/Sensitivity_analyses/ggrangessrv', environmental_correction,'_lui', lui_class_method, '_plots', no_plots, '_', method_within_landscape, '_method', method, threshold_to_use, '.pdf'), collapse = ""), width = 5, height = 3.5)
 }
 
 print(summary(lm(range~nservices, Ranges )))
