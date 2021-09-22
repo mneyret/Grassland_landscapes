@@ -15,4 +15,7 @@ Scripts 1-3 necessitate the access to raw data, which has currently not been mad
 # Shiny app
 The pre-calculated data can also be used as an input to reproduce the Shiny App provided in the ShinyApp folder.
 
-If you use this code, please refer to the doi of the current release.
+If you use this code, please refer to the following doi:  
+<a href="https://zenodo.org/badge/latestdoi/319579227"><img src="https://zenodo.org/badge/319579227.svg" alt="DOI"></a>
+
+
